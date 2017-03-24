@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.stage.*?>
+<?import javafx.scene.text.*?>
+<?import Controllers.KMeansController?>
+
+
+<GridPane fx:id="kMeansTab" hgap="8" vgap="8" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="Controllers.KMeansController">
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <!-- k input -->
+    <Label GridPane.columnIndex="1" GridPane.rowIndex="0" text="k"/>
+    <TextField maxWidth="200" GridPane.columnIndex="0" GridPane.rowIndex="0" fx:id="k" onKeyReleased="#validateK"/>
+
+    <!-- iteration input -->
+    <Label GridPane.columnIndex="1" GridPane.rowIndex="1" text="Iterations"/>
+    <TextField maxWidth="200" GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="iterations" onMouseClicked="#run"/>
+
+    <!-- file input -->
+    <Button GridPane.columnIndex="0" GridPane.rowIndex="2" text="Select Input File" onAction="#getFile"/>
+    <Label GridPane.columnIndex="1" GridPane.rowIndex="2" text="No file chosen"/>
+
+    <Button fx:id="runButton" text="Run" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+
+    <Label text="Output:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+
+    <Button text="Download" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+
+    <TextArea maxWidth="200" editable="false" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+</GridPane>

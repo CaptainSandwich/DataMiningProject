@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import Controllers.KMeansController?>
+
+<TabPane xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" >
+    <Tab text="K-means" closable="false">
+        <content>
+            <fx:include source="KMeansView.fxml"/>
+        </content>
+    </Tab>
+    <Tab text="Bayesian Classifier" closable="false">
+        <GridPane>
+
+        </GridPane>
+    </Tab>
+</TabPane>
