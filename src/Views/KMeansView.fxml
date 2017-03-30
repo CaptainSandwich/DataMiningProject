@@ -25,13 +25,13 @@
 
     <!-- file input -->
     <Button GridPane.columnIndex="0" GridPane.rowIndex="2" text="Select Input File" onAction="#getFile"/>
-    <Label GridPane.columnIndex="1" GridPane.rowIndex="2" text="No file chosen"/>
+    <Label fx:id="fileName" GridPane.columnIndex="1" GridPane.rowIndex="2" text="No file chosen"/>
 
-    <Button fx:id="runButton" text="Run" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <Button fx:id="runButton" text="Run" GridPane.columnIndex="0" GridPane.rowIndex="3" onAction="#run"/>
 
     <Label text="Output:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
 
-    <Button text="Download" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    <Button text="Download" GridPane.columnIndex="0" GridPane.rowIndex="5" onAction="#download"/>
 
-    <TextArea maxWidth="200" editable="false" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+    <TextArea fx:id="output" maxWidth="200" editable="false" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
 </GridPane>

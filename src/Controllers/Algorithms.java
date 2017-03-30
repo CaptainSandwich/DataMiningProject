@@ -70,22 +70,27 @@ public class Algorithms {
                 points_count = 0;
                 ArrayList<Double> sum = new ArrayList<Double>();
                 Cluster cluster = u.get(j);
-                for(int count = 0; count < points.size(); count++) {
+                for(int count = 0; count < points.get(0).size(); count++) {
                     sum.add(0.0);
                 }
 
                 for(i = 0; i < points.size(); i++) {
                     KPoint point = points.get(i);
                     if(point.getCluster() == u.get(j)) {
-
-                        sum.add(i, sum.get(i) + point.getColumn(i));
+                        for(int col =  0; col < point.size(); col++) {
+                            sum.set(col, sum.get(col) + point.getColumn(col));
+                        }
                         points_count++;
+
+                        if(l == iters - 1) {
+                            cluster.addKPoint(point);
+                        }
                     }
                 }
 
                 switch(points_count) {
                     case 0 :
-                        u.add(j, randomCenter(points));
+                        u.set(j, randomCenter(points));
                         break;
 
                     default:

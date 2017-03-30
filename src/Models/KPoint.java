@@ -18,6 +18,11 @@ public class KPoint {
         return dataList.get(i);
     }
 
+    @Override
+    public String toString() {
+        return this.dataList + "";
+    }
+
     public Cluster getCluster() {
         return cluster;
     }
