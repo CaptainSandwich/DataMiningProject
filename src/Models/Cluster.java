@@ -3,13 +3,17 @@ package Models;
 import java.util.ArrayList;
 
 public class Cluster {
-    private int index;
-    private KPoint centroid;
-    private ArrayList<KPoint> points;
+    private ArrayList<Double> centroid;
 
-    public Cluster(int index, KPoint centroid) {
-        this.index = index;
+    public Cluster(ArrayList<Double> centroid) {
         this.centroid = centroid;
-        points = new ArrayList<KPoint>();
+    }
+
+    public ArrayList<Double> getCentroid() {
+        return centroid;
+    }
+
+    public void setColumn(int col, double d) {
+        centroid.add(col, d);
     }
 }

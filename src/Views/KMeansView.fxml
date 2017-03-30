@@ -21,7 +21,7 @@
 
     <!-- iteration input -->
     <Label GridPane.columnIndex="1" GridPane.rowIndex="1" text="Iterations"/>
-    <TextField maxWidth="200" GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="iterations" onMouseClicked="#run"/>
+    <TextField maxWidth="200" GridPane.columnIndex="0" GridPane.rowIndex="1" fx:id="iterations" onKeyReleased="#validateIterations"/>
 
     <!-- file input -->
     <Button GridPane.columnIndex="0" GridPane.rowIndex="2" text="Select Input File" onAction="#getFile"/>

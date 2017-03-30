@@ -3,18 +3,30 @@ package Models;
 import java.util.ArrayList;
 
 public class KPoint {
-    int centerIndex;
-    private ArrayList<Double> dimensions;
+    private Cluster cluster;
+    private ArrayList<Double> dataList;
 
-    public KPoint(ArrayList<Double> dimensions) {
-        this.dimensions = dimensions;
+    public KPoint(ArrayList<Double> dataList) {
+        this.dataList = dataList;
     }
 
-    public double getDimension(int i) {
-        return dimensions.get(i);
+    public void setCluster(Cluster c) {
+        this.cluster = c;
+    }
+
+    public double getColumn(int i) {
+        return dataList.get(i);
+    }
+
+    public Cluster getCluster() {
+        return cluster;
     }
 
     public int size() {
-        return dimensions.size();
+        return dataList.size();
+    }
+
+    public ArrayList<Double> getDataList() {
+        return dataList;
     }
 }
