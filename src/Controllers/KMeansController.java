@@ -69,7 +69,11 @@ public class KMeansController {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
         fileChooser.getExtensionFilters().add(extFilter);
         this.file = fileChooser.showOpenDialog(kMeansTab.getScene().getWindow());
-        fileName.setText(this.file.getName());
+        if(this.file != null) {
+            fileName.setText(this.file.getName());
+        }
+
+
     }
 
     @FXML protected void download(ActionEvent event) {
