@@ -7,12 +7,20 @@ public class Cluster {
     private ArrayList<KPoint> points;
 
     public Cluster(ArrayList<Double> centroid) {
-        this.centroid = centroid;
+        this.centroid = new ArrayList<Double>(centroid);
         this.points = new ArrayList<KPoint>();
     }
 
     public ArrayList<Double> getCentroid() {
         return centroid;
+    }
+
+    public void setCentroid(ArrayList<Double> centroid) {
+        this.centroid = centroid;
+    }
+
+    public ArrayList<KPoint> getPoints() {
+        return points;
     }
 
     @Override

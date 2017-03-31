@@ -235,11 +235,11 @@ public class BayesController {
                 prediction = i;
             }
 
-            outputText += "prob[" + i +"]: " + predictions[i] + "\n";
+            outputText += "P(" + tableHeaders[headerIndexToSolveFor] + "=" + tableClasses[headerIndexToSolveFor][i] + ") = " + predictions[i] + "\n";
             // System.out.println("prob[" + i +"]: " + predictions[i]);
         }
 
-        outputText += "New tuple predicted to be of class " + prediction;
+        outputText += "Prediction: " + tableHeaders[headerIndexToSolveFor] + "=" + tableClasses[headerIndexToSolveFor][prediction];
 
         output.setText(outputText);
     }
