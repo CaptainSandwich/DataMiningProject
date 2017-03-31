@@ -1,5 +1,6 @@
 package Controllers;
 
+import Models.BayesianTuple;
 import Models.Cluster;
 import Models.KPoint;
 import java.lang.Math;
@@ -103,5 +104,154 @@ public class Algorithms {
 
         }
         return clusters;
+    }
+
+
+    // todo bayesian tuple will have classCount, columnCount, data, and other params?
+    public static double[] NaiveBayesClassifyNewTuple(int[][] data, int[] newTuple, int columnCount,
+                                                                String[][] classes, int columnSolveIndex) /*, BayesianTuple tupleToAdd) */
+    {
+
+
+        // Create true class #s, since ours fills it with nulls - todo change this in BayesController.java
+        // todo so we don't have to do it here
+        int classCount[] = new int[columnCount];
+        for(int i = 0; i < classes.length; i++) {
+
+            int countForCurrentClass = 0;
+            for(int j = 0; j < classes[i].length; j++) {
+                if(classes[i][j] == null || classes[i][j].isEmpty()){
+                    break;
+                }
+                countForCurrentClass++;
+            }
+            classCount[i] = countForCurrentClass;
+        }
+
+     //   System.out.println("True class #s");
+      //  for(int a : classCount){
+      //      System.out.println(a + " ");
+       // }
+
+        // Determine P(C)
+        double[] pc = new double[classCount[columnSolveIndex]];
+
+        for(int i = 0; i < pc.length; i++){
+            // Count of the current columnn's current class
+            int count = 0;
+
+            for(int j = 0; j < data.length; j++){
+                if(data[j][columnSolveIndex] == i) {
+                    count++;
+                }
+
+                if(j == data.length - 1){
+                    pc[i] = (double) count / data.length;
+                    //System.out.println(count + " " + data.length);
+                    //System.out.println("prob index " + columnSolveIndex + " is of class " + i + ": " + pc[i]);
+                }
+            }
+        }
+
+        // Determine (P Ak = x | C)
+        ArrayList<Double[]> pa = new ArrayList<Double[]>();
+
+        for(int i = 0; i < columnCount; i++){
+            //if(i == columnSolveIndex)
+            //    pa.add(new Double[0]);
+            pa.add(new Double[classCount[i]]);
+        }
+
+
+        //int currentPAIndex = 0;
+        //
+        double[][] paxC = new double[classCount[columnSolveIndex]][columnCount];
+        for(int currentPAIndex = 0; currentPAIndex < pa.size(); currentPAIndex++){
+            // skip what we've already done
+            if(currentPAIndex == columnSolveIndex)
+                continue;
+
+
+            // i is the # of classes contained in the remaining columns
+            for(int i = 0; i < pa.get(currentPAIndex).length; i++){
+
+                // discount values of i that doesn't match our new tuple
+                // (we only care about relevant information to our new tuple)
+                if(i != newTuple[currentPAIndex])
+                    continue;
+
+                // k represents all possible classes we can get
+                for(int k = 0; k < classCount[columnSolveIndex]; k++) {
+
+                    int count = 0;
+                    int total = 0;
+                    // j iterates over all rows in the set
+                    for (int j = 0; j < data.length; j++) {
+                        if (data[j][currentPAIndex] == i && data[j][columnSolveIndex] == k) {
+                            count++;
+                        }
+
+                        if(data[j][columnSolveIndex] == k)
+                            total++;
+
+                        //System.out.println("count: " + count);
+                        //System.out.println("total: " + total);
+
+                        if (j == data.length - 1) {
+                            //  pa.get(currentPAIndex)[i] = (double) count / data.length;
+                            paxC[k][currentPAIndex] = (double) count / total;
+                            System.out.println(count + " " + data.length);
+                        //    System.out.println("prob index " + currentPAIndex +
+                         //           " is of class " + i + ": " + paxC[k][currentPAIndex] + " given k " + k);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        // classify new tuple
+        double[] predictions = new double[classCount[columnSolveIndex]];
+
+        for(int i = 0; i < predictions.length; i++){
+            for(int j = 0; j < columnCount; j++){
+            //    System.out.println(paxC[i][j] + " ");
+            }
+            //System.out.println();
+        }
+
+        for(int i = 0; i < predictions.length; i++){
+            double something = 1;
+            for(int j = 0; j < columnCount; j++){
+                if(j == columnSolveIndex) {
+                    continue;
+                }
+
+            //    System.out.println("j = " + j);
+                //predictions[i] = pc[i] * something
+                something *= paxC[i][j];
+            //    System.out.print(paxC[i][j] + " ");
+            }
+            predictions[i] = pc[i] * something;
+        }
+
+        /*
+        int prediction = 0;
+        double max = Double.MIN_VALUE;
+        for(int i = 0; i < predictions.length; i++){
+            if(predictions[i] > max){
+                max = predictions[i];
+                prediction = i;
+            }
+
+           // System.out.println("prob[" + i +"]: " + predictions[i]);
+        }
+
+        System.out.println("New tuple predicted to be of class " + prediction); */
+        //double[][] pa = new double[cla]
+
+        return predictions;
+        // create classDetermined var in tupleToAdd, set it to whatever our classifier guesses then return this under output as a label
+        //return /* new tuple with determined class */ null;
     }
 }

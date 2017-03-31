@@ -14,8 +14,8 @@
         </content>
     </Tab>
     <Tab text="Bayesian Classifier" closable="false">
-        <GridPane>
-
-        </GridPane>
+        <content>
+            <fx:include source="BayesView.fxml" />
+        </content>
     </Tab>
 </TabPane>

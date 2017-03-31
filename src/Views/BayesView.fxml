@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.stage.*?>
+<?import javafx.scene.text.*?>
+<?import Controllers.BayesController?>
+
+
+
+<GridPane fx:id="bayesTab" hgap="8" vgap="8" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="Controllers.BayesController" >
+
+
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+
+    <!-- get file -->
+    <Button GridPane.columnIndex="0" GridPane.rowIndex="0" text="Select Input File" onAction="#getFile"/>
+    <Label fx:id="fileName" GridPane.columnIndex="1" GridPane.rowIndex="0" text="No file chosen"/>
+
+
+    <!-- input fields and helpers -->
+    <Label GridPane.columnIndex="1" GridPane.rowIndex="1" text="Input schema expected: "/>
+    <Label GridPane.columnIndex="2" GridPane.rowIndex="1" fx:id="schemaTip" text="Choose a file first!" />
+
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="2" text="Input Query:" />
+    <TextField fx:id="inputQuery" GridPane.rowIndex="2" GridPane.columnIndex="2" maxWidth="200" />
+
+    <Label GridPane.columnIndex="1" GridPane.rowIndex="3" text="Classes: " />
+    <Label GridPane.columnIndex="2" GridPane.rowIndex="3" fx:id="classTip" text="Choose a file first!" />
+
+    <!-- RUN! -->
+    <Button fx:id="runButton" text="Run" GridPane.columnIndex="0" GridPane.rowIndex="4" onAction="#run"/>
+
+    <!-- output -->
+    <TextArea fx:id="output" editable="false" GridPane.columnIndex="0"
+              GridPane.rowIndex="5" GridPane.columnSpan="2"/>
+
+    <!-- todo help button that pops up with the input query schema -->
+</GridPane>
