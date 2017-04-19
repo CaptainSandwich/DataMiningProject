@@ -32,6 +32,7 @@
     <Label text="Output:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
 
     <Button text="Download" GridPane.columnIndex="0" GridPane.rowIndex="5" onAction="#download"/>
+    <Button text="Download centroid data" GridPane.columnIndex="1" GridPane.rowIndex="5" onAction="#downloadRaw"/>
 
     <TextArea fx:id="output" maxWidth="200" editable="false" GridPane.columnIndex="0" GridPane.rowIndex="6"/>
 </GridPane>

@@ -85,11 +85,11 @@ public class KMeansController {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
         fileChooser.getExtensionFilters().add(extFilter);
-        this.file = fileChooser.showSaveDialog(kMeansTab.getScene().getWindow());
+        File outfile = fileChooser.showSaveDialog(kMeansTab.getScene().getWindow());
         try {
             FileWriter fileWriter = null;
 
-            fileWriter = new FileWriter(file);
+            fileWriter = new FileWriter(outfile);
             fileWriter.write(output.getText().toString());
             fileWriter.close();
         } catch (Exception e) {
@@ -101,29 +101,22 @@ public class KMeansController {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
         fileChooser.getExtensionFilters().add(extFilter);
-        this.file = fileChooser.showSaveDialog(kMeansTab.getScene().getWindow());
+        File outfile = fileChooser.showSaveDialog(kMeansTab.getScene().getWindow());
         try {
-            String s1 = "";
+            String s1 = new String("");
             for(Cluster c : clusters) {
                 String s2 = c.getCentroid().toString();
                 s2 = s2.substring(1, s2.length() - 1);
                 s1 += s2 + "\n";
             }
 
-            for(Cluster c : clusters) {
-                for(KPoint point : c.getPoints()) {
-                    String s2 = point.toString();
-                    s2 = s2.substring(1, s2.length() - 1);
-                    s1 += s2 + "\n";
-                }
+            if( outfile.exists() ) {
+                outfile.delete();
             }
-            if( file.exists() ) {
-                file.delete();
-            }
-            file.createNewFile();
+            outfile.createNewFile();
 
 
-            FileWriter fileWriter = new FileWriter(file);
+            FileWriter fileWriter = new FileWriter(outfile);
             fileWriter.write(s1);
             fileWriter.close();
         } catch (Exception e) {
@@ -152,10 +145,17 @@ public class KMeansController {
 
         clusters = null;
         clusters = Algorithms.KMeans(dataTable, Integer.valueOf(k.getText()), Integer.valueOf(iterations.getText()));
-        String outputString = "";
+        String outputString = "[";
         for(Cluster c : clusters) {
-            outputString += c.toString();
+            if(c == clusters.get(0)) {
+                outputString += c.toString();
+            } else {
+                outputString += ",";
+                outputString += c.toString();
+            }
         }
+
+        outputString += "]";
 
         this.output.setText(outputString);
     }

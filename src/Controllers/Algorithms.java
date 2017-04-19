@@ -52,9 +52,8 @@ public class Algorithms {
 
 
         for(l = 0; l < iters; l++) {
-            for(i = 0; i < points.size(); i++) {
+            for(KPoint point : points) {
                 nearest_dist = POSITIVE_INFINITY;
-                KPoint point = points.get(i);
                 for(j = 0; j < k; j++) {
                     Cluster center = clusters.get(j);
                     dist = distance(point.getDataList(), center.getCentroid());
@@ -67,31 +66,26 @@ public class Algorithms {
             }
 
 
-            for(j = 0; j < k; j++) {
+            for(Cluster cluster : clusters) {
                 points_count = 0;
                 ArrayList<Double> sum = new ArrayList<Double>();
-                Cluster cluster = clusters.get(j);
                 for(int count = 0; count < points.get(0).size(); count++) {
                     sum.add(0.0);
                 }
 
-                for(i = 0; i < points.size(); i++) {
-                    KPoint point = points.get(i);
-                    if(point.getCluster() == clusters.get(j)) {
+                for(KPoint point : points) {
+                    if(point.getCluster() == cluster) {
                         for(int col =  0; col < point.size(); col++) {
                             sum.set(col, sum.get(col) + point.getColumn(col));
                         }
                         points_count++;
 
-                        if(l == iters - 1) {
-                            cluster.addKPoint(point);
-                        }
                     }
                 }
 
                 switch(points_count) {
                     case 0 :
-                        clusters.get(j).setCentroid(new ArrayList<Double>(randomCenter(points)));
+                        cluster.setCentroid(new ArrayList<Double>(randomCenter(points)));
                         break;
 
                     default:
@@ -101,7 +95,15 @@ public class Algorithms {
                         break;
                 }
             }
-
+            if(l == iters - 1) {
+                for(Cluster cluster : clusters) {
+                    for(KPoint point : points) {
+                        if(point.getCluster() == cluster) {
+                            cluster.addKPoint(point);
+                        }
+                    }
+                }
+            }
         }
         return clusters;
     }

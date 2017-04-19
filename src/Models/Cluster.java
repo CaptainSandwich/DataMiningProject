@@ -23,15 +23,19 @@ public class Cluster {
         return points;
     }
 
+    public void setPoints(ArrayList<KPoint> points) {
+        this.points = points;
+    }
+
     @Override
     public String toString() {
-        String s = centroid.toString();
+        String s = "[" + centroid.toString();
         for(KPoint point : points) {
-            s += point.getDataList();
+            s += "," + point.getDataList();
         }
-        s = s.replace("[", "\"").replace("]", "\",").replace(", ", ",");
-        s = s.substring(0, s.length() - 1);
-        return s + "\n";
+       /* s = s.replace("[", "\"").replace("]", "\",").replace(", ", ",");
+        s = s.substring(0, s.length() - 1);*/
+        return s + "]\n";
     }
 
     public void setColumn(int col, double d) {
