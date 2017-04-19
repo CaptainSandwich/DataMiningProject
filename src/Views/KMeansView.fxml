@@ -27,7 +27,7 @@
     <Button GridPane.columnIndex="0" GridPane.rowIndex="2" text="Select Input File" onAction="#getFile"/>
     <Label fx:id="fileName" GridPane.columnIndex="1" GridPane.rowIndex="2" text="No file chosen"/>
 
-    <Button fx:id="runButton" text="Run" GridPane.columnIndex="0" GridPane.rowIndex="3" onAction="#run"/>
+    <Button fx:id="runButton" text="Run"  disable="true" GridPane.rowIndex="3" onAction="#run"/>
 
     <Label text="Output:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
 
