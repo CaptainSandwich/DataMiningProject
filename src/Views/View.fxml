@@ -21,7 +21,7 @@
 
     <Tab text="PageRank" closable="false">
         <content>
-            <fx:include source="PageRank.fxml" />
+            <fx:include source="PageRankView.fxml" />
         </content>
     </Tab>
 </TabPane>
