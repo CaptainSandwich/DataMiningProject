@@ -256,4 +256,69 @@ public class Algorithms {
         // create classDetermined var in tupleToAdd, set it to whatever our classifier guesses then return this under output as a label
         //return /* new tuple with determined class */ null;
     }
+
+
+    // d is our dampening factor
+    public static double[] pageRank(int[][] data, double d){
+
+        // although rows should equal cols
+        int rows = data.length;
+        int cols = data[0].length;
+
+
+        double[] pagerank = new double[rows];
+
+        // initialize pagerank of each page to 1/rows (number of pages)
+
+        for(int i = 0; i < rows; i++){
+            pagerank[i] = 1.0 / (double) rows;
+        }
+
+        double[] tempPageRank = new double[rows];
+
+        int iteration = 0;
+        while(iteration < 2) {
+            for(int i = 0; i < rows; i++){
+                tempPageRank[i] = pagerank[i];
+                pagerank[i] = 0.0;
+            }
+
+
+            for(int i = 0; i < rows; i++){
+                for(int j = 0; j < cols; j++) {
+
+                    if (data[j][i] > 0) {
+                        int k = 0;
+                        int outgoingLinks = 0;
+                        while (k < cols) {
+                            if (data[j][k] > 0) {
+                                outgoingLinks += data[j][k];
+                                //outgoingLinks++;
+                            }
+                            k++;
+                        }
+
+                        pagerank[i] += tempPageRank[j] * (1 / (double) outgoingLinks);
+                    }
+                }
+            }
+
+            System.out.println("Finished " + iteration);
+
+            for(int i = 0; i < rows; i++){
+                System.out.println("Page rank of " + (i+1) + " is " + pagerank[i]);
+            }
+            iteration++;
+        }
+
+
+        // add dampening factor d
+
+       for(int i = 0; i < rows; i++){
+            pagerank[i] = (1-d) + d*pagerank[i];
+       }
+
+        return pagerank;
+    }
+
 }

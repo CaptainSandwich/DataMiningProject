@@ -18,4 +18,10 @@
             <fx:include source="BayesView.fxml" />
         </content>
     </Tab>
+
+    <Tab text="PageRank" closable="false">
+        <content>
+            <fx:include source="PageRankView.fxml" />
+        </content>
+    </Tab>
 </TabPane>
