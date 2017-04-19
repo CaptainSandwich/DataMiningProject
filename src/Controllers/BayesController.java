@@ -16,7 +16,9 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by greg on 3/30/2017.
@@ -51,10 +53,13 @@ public class BayesController {
     protected File file;
 
 
+
+
     // stuff that needs to be moved to the model
     String tableHeaders[];
     String tableClasses[][];
-    int[][] tableData;
+    int [][] tableData;
+    List<Map<String, Integer>> classMap;
 
 
     @FXML protected void validateInputQuery(KeyEvent event) {
@@ -138,6 +143,14 @@ public class BayesController {
         }
 
         this.tableClasses = classes;
+        classMap = new ArrayList<Map<String, Integer>>();
+
+        for(int i = 0; i < this.tableClasses.length; i++) {
+            classMap.add(i, new HashMap<String, Integer>());
+            for(int j = 0; j < this.tableClasses[i].length; j++) {
+                classMap.get(i).put(this.tableClasses[i][j], j);
+            }
+        }
 
         // set data
         this.tableData = new int[records.size() - 2][this.tableHeaders.length];
@@ -147,7 +160,7 @@ public class BayesController {
 
             //System.out.print("Record " + i + ": ");
             for(int j = 0; j < this.tableHeaders.length; j++){
-                this.tableData[i - 2][j] = Integer.parseInt(records.get(i).get(j));
+                this.tableData[i - 2][j] = classMap.get(j).get(records.get(i).get(j));
                // System.out.print(this.tableData[i - 2][j] + " ");
             }
             //System.out.println();
@@ -198,7 +211,6 @@ public class BayesController {
 
 
     @FXML protected void run(ActionEvent event) {
-
         // Parse input query
         String inputQuery = this.inputQuery.getText().trim();
         String[] inputs = inputQuery.split(",");
@@ -221,7 +233,7 @@ public class BayesController {
             }
             else {
                 inputs[i] = inputs[i].trim();
-                tupleToAdd[i] = Integer.parseInt(inputs[i]);
+                tupleToAdd[i] = classMap.get(i).get(inputs[i]);
             }
         }
 
