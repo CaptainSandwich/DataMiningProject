@@ -10,9 +10,7 @@
     <orderEntry type="library" name="commons-csv-1.4" level="project" />
     <orderEntry type="module-library">
       <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/jsoup-1.10.2.jar!/" />
-        </CLASSES>
+        <CLASSES />
         <JAVADOC />
         <SOURCES />
       </library>

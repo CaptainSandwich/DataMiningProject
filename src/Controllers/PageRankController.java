@@ -14,7 +14,6 @@ import org.apache.commons.csv.CSVRecord;
 
 import java.awt.*;
 import javafx.event.ActionEvent;
-import org.jsoup.Jsoup;
 
 import java.io.File;
 import java.io.FileReader;
@@ -43,6 +42,9 @@ public class PageRankController {
     protected Button runButton;
 
     @FXML
+    protected TextField iterationField;
+
+    @FXML
     protected TextArea output;
 
     protected File file;
@@ -51,11 +53,24 @@ public class PageRankController {
     // dampening factor D
     double d;
 
+    // iterat
+    int iterations;
+
     @FXML protected void validateDampeningFactor(KeyEvent event) {
         String dFactor = dampeningFactor.getText();
         if(dFactor.matches("\\d+\\.\\d+") && Double.parseDouble(dFactor) >= 0.0 && Double.parseDouble(dFactor) <= 1.0) {
             runButton.setDisable(false);
             this.d = Double.parseDouble((dFactor));
+        } else {
+            runButton.setDisable(true);
+        }
+    }
+
+    @FXML protected void validateIterations(KeyEvent event) {
+        String iter = iterationField.getText();
+        if(iter.matches("\\d+") && Integer.parseInt(iter) >= 1) {
+            runButton.setDisable(false);
+            this.iterations = Integer.parseInt(iter);
         } else {
             runButton.setDisable(true);
         }
@@ -113,7 +128,7 @@ public class PageRankController {
         // Though we should probably set up a model for this bad boy
 
 
-        double[] pagerank = pageRank(pageAdjacencyMatrix, this.d);
+        double[] pagerank = pageRank(pageAdjacencyMatrix, this.d, this.iterations);
 
         String outputText = "";
 

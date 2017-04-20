@@ -19,16 +19,21 @@
         <Insets top="15" right="15" bottom="15" left="15"/>
     </padding>
 
+    <!-- iterations input -->
+    <Label GridPane.columnIndex="0" text="Enter number of iterations:" GridPane.rowIndex="0" />
+    <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="iterationField" onKeyReleased="#validateIterations" />
+
     <!-- dampening factor input -->
     <Label GridPane.columnIndex="0" text="Enter dampening factor:" GridPane.rowIndex="1" />
     <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="dampeningFactor" onKeyReleased="#validateDampeningFactor" />
+
 
     <!-- file input -->
     <Button GridPane.columnIndex="0" GridPane.rowIndex="2" text="Select Input File" onAction="#getFile" />
     <Label fx:id="fileName" GridPane.columnIndex="1" GridPane.rowIndex="2" text="No file chosen"/>
 
 
-    <Button fx:id="runButton" GridPane.columnIndex="0" GridPane.rowIndex="3" text="Run" onAction="#run" />
+    <Button fx:id="runButton" GridPane.columnIndex="0" GridPane.rowIndex="3" text="Run" disable="true" onAction="#run" />
 
     <TextArea fx:id="output" GridPane.columnIndex="0" GridPane.rowIndex="4" editable="false" GridPane.columnSpan="2" />
 
