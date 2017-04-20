@@ -259,7 +259,7 @@ public class Algorithms {
 
 
     // d is our dampening factor
-    public static double[] pageRank(int[][] data, double d){
+    public static double[] pageRank(int[][] data, double d, int iterations){
 
         // although rows should equal cols
         int rows = data.length;
@@ -277,7 +277,7 @@ public class Algorithms {
         double[] tempPageRank = new double[rows];
 
         int iteration = 0;
-        while(iteration < 2) {
+        while(iteration < iterations) {
             for(int i = 0; i < rows; i++){
                 tempPageRank[i] = pagerank[i];
                 pagerank[i] = 0.0;
