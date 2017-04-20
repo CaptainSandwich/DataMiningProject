@@ -24,14 +24,9 @@
 
 
     <!-- input fields and helpers -->
-    <Label GridPane.columnIndex="1" GridPane.rowIndex="1" text="Input schema expected: "/>
-    <Label GridPane.columnIndex="2" GridPane.rowIndex="1" fx:id="schemaTip" text="Choose a file first!" />
 
     <Label GridPane.columnIndex="0" GridPane.rowIndex="2" text="Input Query:" />
     <TextField fx:id="inputQuery" GridPane.rowIndex="2" GridPane.columnIndex="2" maxWidth="200" />
-
-    <Label GridPane.columnIndex="1" GridPane.rowIndex="3" text="Classes: " />
-    <Label GridPane.columnIndex="2" GridPane.rowIndex="3" fx:id="classTip" text="Choose a file first!" />
 
     <!-- RUN! -->
     <Button fx:id="runButton" text="Run" GridPane.columnIndex="0" GridPane.rowIndex="4" onAction="#run"/>
@@ -39,6 +34,11 @@
     <!-- output -->
     <TextArea fx:id="output" editable="false" GridPane.columnIndex="0"
               GridPane.rowIndex="5" GridPane.columnSpan="2"/>
+
+    <!-- cross validation -->
+    <TextField fx:id="kfolds" GridPane.rowIndex="2" GridPane.columnIndex="3" maxWidth="200" />
+    <Button fx:id="validateButton" text="Run" GridPane.columnIndex="3" GridPane.rowIndex="3" onAction="#crossValidate"/>
+    <Label fx:id="validation" GridPane.columnIndex="3" GridPane.rowIndex="4" text="" />
 
     <!-- todo help button that pops up with the input query schema -->
 </GridPane>

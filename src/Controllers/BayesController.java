@@ -15,10 +15,7 @@ import org.apache.commons.csv.CSVRecord;
 
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by greg on 3/30/2017.
@@ -36,6 +33,9 @@ public class BayesController {
     protected Label schemaTip;
 
     @FXML
+    protected Label validation;
+
+    @FXML
     protected TextField inputQuery;
 
     @FXML
@@ -45,10 +45,16 @@ public class BayesController {
     protected Button runButton;
 
     @FXML
+    protected Button validateButton;
+
+    @FXML
     protected Label fileName;
 
     @FXML
     protected TextArea output;
+
+    @FXML
+    protected TextField kfolds;
 
     protected File file;
 
@@ -180,7 +186,7 @@ public class BayesController {
         for(String header: tableHeaders){
            schemaHelper += header + " ";
         }
-        schemaTip.setText(schemaHelper);
+        /*schemaTip.setText(schemaHelper);*/
 
         String classHelper = "";
         for(int i = 0; i < tableHeaders.length; i++){
@@ -206,7 +212,47 @@ public class BayesController {
                 classHelper += "}, ";
             }
         }
-        classTip.setText(classHelper);
+        /*classTip.setText(classHelper);*/
+    }
+
+    @FXML protected void crossValidate(ActionEvent event) {
+        int hits = 0;
+        int hitAvg = 0;
+        int k = Integer.parseInt(this.kfolds.getText());
+        int chunkSize = this.tableData.length/k;
+        for(int i = 0; i < this.tableData.length; i += chunkSize) {
+            int [][] trainingData = new int[this.tableData.length - chunkSize][tableData[i].length];
+
+            for(int index = 0; index < this.tableData.length - chunkSize; index++){
+                if(index < i || index > i + chunkSize) {
+                    trainingData[index] = tableData[index].clone();
+                }
+            }
+
+            for(int j = i; j < i + chunkSize && j < this.tableData.length; j++) {
+                int[] tupleToAdd = tableData[j].clone();
+
+                for(int index = 0; index < this.tableData[i].length; index++) {
+                    tupleToAdd[index] = -1;
+
+                    double predictions[] = Algorithms.NaiveBayesClassifyNewTuple(this.tableData, tupleToAdd, this.tableHeaders.length, this.tableClasses, index);
+                    int prediction = 0;
+                    double max = Double.MIN_VALUE;
+                    for(int i2 = 0; i2 < predictions.length; i2++){
+                        if(predictions[i2] > max) {
+                            max = predictions[i2];
+                            prediction = i2;
+                        }
+                    }
+
+                    if(prediction == tableData[j][index]){
+                        hits++;
+                    }
+                }
+            }
+        }
+        double error = (double) hits/(tableData.length*tableData[0].length);
+        validation.setText(String.valueOf(error));
     }
 
 
