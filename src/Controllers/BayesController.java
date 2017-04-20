@@ -48,6 +48,9 @@ public class BayesController {
     protected Button validateButton;
 
     @FXML
+    protected TextField column;
+
+    @FXML
     protected Label fileName;
 
     @FXML
@@ -220,6 +223,12 @@ public class BayesController {
         int hitAvg = 0;
         int k = Integer.parseInt(this.kfolds.getText());
         int chunkSize = this.tableData.length/k;
+        int col;
+        if(!column.getText().equals("")){
+            col = Integer.parseInt(column.getText());
+        } else {
+            col = -1;
+        }
         for(int i = 0; i < this.tableData.length; i += chunkSize) {
             int [][] trainingData = new int[this.tableData.length - chunkSize][tableData[i].length];
 
@@ -231,8 +240,13 @@ public class BayesController {
 
             for(int j = i; j < i + chunkSize && j < this.tableData.length; j++) {
                 int[] tupleToAdd = tableData[j].clone();
-
-                for(int index = 0; index < this.tableData[i].length; index++) {
+                int start = 0;
+                int end = this.tableData[i].length;
+                if(col >= 0) {
+                    start = col;
+                    end = col + 1;
+                }
+                for(int index = start; index < end; index++) {
                     tupleToAdd[index] = -1;
 
                     double predictions[] = Algorithms.NaiveBayesClassifyNewTuple(this.tableData, tupleToAdd, this.tableHeaders.length, this.tableClasses, index);
@@ -251,7 +265,12 @@ public class BayesController {
                 }
             }
         }
-        double error = (double) hits/(tableData.length*tableData[0].length);
+        double error;
+        if(col == -1) {
+            error = (double) hits/(tableData.length*tableData[0].length);
+        } else {
+            error = (double) hits/(tableData.length);
+        }
         validation.setText(String.valueOf(error));
     }
 

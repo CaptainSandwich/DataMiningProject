@@ -112,13 +112,6 @@ public class PageRankController {
         // Do some calculations here
         // Though we should probably set up a model for this bad boy
 
-        /*
-        try {
-            Jsoup.connect("http://google.com").get().html();
-        } catch (IOException e) {
-            System.out.println("Couldn't connect to one of the websites!");
-            e.printStackTrace();
-        } */
 
         double[] pagerank = pageRank(pageAdjacencyMatrix, this.d);
 
