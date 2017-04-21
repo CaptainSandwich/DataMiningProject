@@ -26,7 +26,7 @@
     <!-- input fields and helpers -->
 
     <Label GridPane.columnIndex="0" GridPane.rowIndex="2" text="Input Query:" />
-    <TextField fx:id="inputQuery" GridPane.rowIndex="2" GridPane.columnIndex="2" maxWidth="200" />
+    <TextField fx:id="inputQuery" GridPane.rowIndex="3" GridPane.columnIndex="0" maxWidth="200" />
 
     <!-- RUN! -->
     <Button fx:id="runButton" text="Run" GridPane.columnIndex="0" GridPane.rowIndex="4" onAction="#run"/>
@@ -37,10 +37,12 @@
 
     <!-- cross validation -->
     <Label GridPane.columnIndex="3" GridPane.rowIndex="0" text="Cross validation:" />
-    <TextField fx:id="column" GridPane.rowIndex="1" GridPane.columnIndex="3" maxWidth="200" />
-    <TextField fx:id="kfolds" GridPane.rowIndex="2" GridPane.columnIndex="3" maxWidth="200" />
-    <Button fx:id="validateButton" text="Run" GridPane.columnIndex="3" GridPane.rowIndex="3" onAction="#crossValidate"/>
-    <Label fx:id="validation" GridPane.columnIndex="3" GridPane.rowIndex="4" text="" />
+    <Label GridPane.columnIndex="3" GridPane.rowIndex="1" text="Column" />
+    <TextField fx:id="column" GridPane.rowIndex="2" GridPane.columnIndex="3" maxWidth="200" />
+    <Label GridPane.columnIndex="3" GridPane.rowIndex="3" text="k" />
+    <TextField fx:id="kfolds" GridPane.rowIndex="4" GridPane.columnIndex="3" maxWidth="200" />
+    <Button fx:id="validateButton" text="Run" GridPane.columnIndex="3" GridPane.rowIndex="5" onAction="#crossValidate"/>
+    <Label fx:id="validation" GridPane.columnIndex="5" GridPane.rowIndex="6" text="" />
 
     <!-- todo help button that pops up with the input query schema -->
 </GridPane>
