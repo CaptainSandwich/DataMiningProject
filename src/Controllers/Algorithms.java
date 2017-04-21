@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static java.lang.Double.POSITIVE_INFINITY;
+import static java.lang.Double.sum;
 
 public class Algorithms {
 
@@ -258,6 +259,39 @@ public class Algorithms {
     }
 
 
+
+    // simple transposeMatrix function found on stack overflow
+    public static double[][] transposeMatrix(double [][] m){
+        double[][] temp = new double[m[0].length][m.length];
+        for (int i = 0; i < m.length; i++)
+            for (int j = 0; j < m[0].length; j++)
+                temp[j][i] = m[i][j];
+        return temp;
+    }
+
+    public static double[] vectorMultiply(double[][] m, double[] v){
+       int mRows = m.length;
+       int mCols = m[0].length;
+       // vRows should be equal to mCols
+       int vRows = v.length;
+
+       double[] c = new double[vRows];
+
+       System.out.println("calcing pagerank");
+       double rowSum;
+       for(int i = 0; i < mRows; i++){
+           rowSum = 0.0;
+           for(int j = 0; j < mCols; j++){
+               rowSum += v[j] * m[i][j];
+           }
+               c[i] = rowSum;
+           System.out.println(c[i] + " ");
+       }
+
+
+       return c;
+    }
+
     // d is our dampening factor
     public static double[] pageRank(int[][] data, double d, int iterations){
 
@@ -267,56 +301,87 @@ public class Algorithms {
 
 
         double[] pagerank = new double[rows];
+        double[][]probabilityMatrix = new double[rows][cols];
+        double[][] dataMatrix = new double[rows][cols];
+        double[][] dataMatrixTransposed = new double[rows][cols];
 
-        // initialize pagerank of each page to 1/rows (number of pages)
 
+        int sumOfLinksInRow = 0;
         for(int i = 0; i < rows; i++){
-            pagerank[i] = 1.0 / (double) rows;
-        }
+            for(int j = 0; j < cols; j++){
+                sumOfLinksInRow = 0;
 
-        double[] tempPageRank = new double[rows];
+                // iterate once through each row, count sum of total, set each 1 to 1 / rowSum, seen in slides here
+                // https://www.slideshare.net/maimustafa566/page-rank-algorithm-33212250
+                for(int k = 0; k < cols; k++){
 
-        int iteration = 0;
-        while(iteration < iterations) {
-            for(int i = 0; i < rows; i++){
-                tempPageRank[i] = pagerank[i];
-                pagerank[i] = 0.0;
-            }
-
-
-            for(int i = 0; i < rows; i++){
-                for(int j = 0; j < cols; j++) {
-
-                    if (data[j][i] > 0) {
-                        int k = 0;
-                        int outgoingLinks = 0;
-                        while (k < cols) {
-                            if (data[j][k] > 0) {
-                                outgoingLinks += data[j][k];
-                                //outgoingLinks++;
-                            }
-                            k++;
-                        }
-
-                        pagerank[i] += tempPageRank[j] * (1 / (double) outgoingLinks);
+                    if(data[i][k] == 1){
+                        sumOfLinksInRow++;
                     }
                 }
-            }
 
-            System.out.println("Finished " + iteration);
-
-            for(int i = 0; i < rows; i++){
-                System.out.println("Page rank of " + (i+1) + " is " + pagerank[i]);
+                if(data[i][j] == 1) {
+                    dataMatrix[i][j] = 1.0 / (double)sumOfLinksInRow;
+                } else {
+                    dataMatrix[i][j] = 0;
+                }
             }
-            iteration++;
+        }
+
+        System.out.println("A=");
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                System.out.print(dataMatrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        // transpose data matrix
+
+        dataMatrixTransposed = transposeMatrix(dataMatrix);
+
+
+
+        // initialize pagerank of each page to 1/rows (number of pages) * (1-d)
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < cols; j++){
+                probabilityMatrix[i][j] = (1.0 / (double) rows) * (1-d);
+            }
+        }
+
+        // multiply matrixT by d
+        System.out.println("transposed mat");
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+                dataMatrixTransposed[i][j] = dataMatrixTransposed[i][j] * d;
+                System.out.print(dataMatrixTransposed[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+        // add them (pagerank and matrixT) together
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < cols; j++){
+               probabilityMatrix[i][j] = probabilityMatrix[i][j] + dataMatrixTransposed[i][j];
+            }
         }
 
 
-        // add dampening factor d
+        // initial pagerank matrix
+        for(int i = 0; i < rows; i++){
+            pagerank[i] = 1;
+        }
 
-       for(int i = 0; i < rows; i++){
-            pagerank[i] = (1-d) + d*pagerank[i];
-       }
+        // loop: multiply pagerank matrix and probabilityMatrix, store result in pageRank until done with steps
+        // Generally we'd do this until it converges, but we let the user decide that
+        int iterator = 0;
+
+        // in case user enters one
+        do {
+
+            pagerank = vectorMultiply(probabilityMatrix, pagerank);
+            iterator++;
+        } while(iterator < iterations);
 
         return pagerank;
     }
