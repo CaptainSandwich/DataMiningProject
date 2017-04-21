@@ -277,7 +277,6 @@ public class Algorithms {
 
        double[] c = new double[vRows];
 
-       System.out.println("calcing pagerank");
        double rowSum;
        for(int i = 0; i < mRows; i++){
            rowSum = 0.0;
@@ -285,7 +284,6 @@ public class Algorithms {
                rowSum += v[j] * m[i][j];
            }
                c[i] = rowSum;
-           System.out.println(c[i] + " ");
        }
 
 
@@ -328,12 +326,9 @@ public class Algorithms {
             }
         }
 
-        System.out.println("A=");
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
-                System.out.print(dataMatrix[i][j] + " ");
             }
-            System.out.println();
         }
 
         // transpose data matrix
@@ -350,13 +345,10 @@ public class Algorithms {
         }
 
         // multiply matrixT by d
-        System.out.println("transposed mat");
         for(int i = 0; i < rows; i++){
             for(int j = 0; j < cols; j++){
                 dataMatrixTransposed[i][j] = dataMatrixTransposed[i][j] * d;
-                System.out.print(dataMatrixTransposed[i][j] + " ");
             }
-            System.out.println();
         }
 
         // add them (pagerank and matrixT) together
