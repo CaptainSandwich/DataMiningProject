@@ -42,7 +42,7 @@
     <Label GridPane.columnIndex="3" GridPane.rowIndex="3" text="k" />
     <TextField fx:id="kfolds" GridPane.rowIndex="4" GridPane.columnIndex="3" maxWidth="200" />
     <Button fx:id="validateButton" text="Run" GridPane.columnIndex="3" GridPane.rowIndex="5" onAction="#crossValidate"/>
-    <Label fx:id="validation" GridPane.columnIndex="5" GridPane.rowIndex="6" text="" />
+    <Label fx:id="validation" GridPane.columnIndex="3" GridPane.rowIndex="6" text="" />
 
     <!-- todo help button that pops up with the input query schema -->
 </GridPane>
